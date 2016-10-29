@@ -1,0 +1,1 @@
+﻿Cloze test generator for spanish texts.
