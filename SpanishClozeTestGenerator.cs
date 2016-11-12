@@ -166,20 +166,38 @@ namespace EjercicioMago
             string report = null;
             var forms = GetConjugatedToInfinitive(mood, tense, ref report);
 
-            char[] splitter = new Char[] { ' ', ',', '.', '(', ')', '[', ']' };
+            char[] splitter = GetSplitter();
             string[] words = text.Split(splitter);
-            HashSet<string> foundForms = new HashSet<string>();       
-            foreach(string w in words)
-            {               
-                if (w != string.Empty && forms.ContainsKey(w.ToLower()))
+            HashSet<string> foundForms = new HashSet<string>();
+            var pronouns = GetPronouns();
+            string word = String.Empty;
+            foreach (string w in words)
+            {
+                if (w != string.Empty)
                 {
-                    if (forms.ContainsKey(w.ToLower()))
+                    if (word.Equals(String.Empty))
                     {
-                        foundForms.Add(w);                    
+                        if (pronouns.Contains(w))
+                        {
+                            word = w;
+                            continue;
+                        }
                     }
+                    else
+                    {
+                        word = $"{word} {w}";
+                    }
+                    if (forms.ContainsKey(word.ToLower()))
+                    {
+                        foundForms.Add(word);
+                    }
+                    else if (forms.ContainsKey(w.ToLower()))
+                    {
+                        foundForms.Add(w);
+                    }
+                    word = String.Empty;
                 }
             }
-
             //Console.WriteLine($"{{{w.ToLower()}}}");
             foreach (var w in foundForms)
             {
@@ -194,22 +212,64 @@ namespace EjercicioMago
             return text;
         }
 
+        private List<string> GetPronouns()
+        {
+            var pronouns = new List<string>();
+            pronouns.Add("me");
+            pronouns.Add("te");
+            pronouns.Add("se");
+            pronouns.Add("nos");
+            pronouns.Add("os");
+            return pronouns;
+        }
+
+        private char[] GetSplitter()
+        {
+            return new Char[] { ' ', ',', '.', '!', '¡', '?', '¿', '\'', '(', ')', '[', ']' };
+        }
+
         public string CreateRTFClozeFromText(string text, string mood, string tense, bool showInfinitive, double spaceSize)
         {
             string report = null;
+
+            if (mood == null || tense == null)
+                return report;
+
             var forms = GetConjugatedToInfinitive(mood, tense, ref report);
 
-            char[] splitter = new Char[] { ' ', ',', '.', '(', ')', '[', ']' };
+            char[] splitter = GetSplitter();          
+
             string[] words = text.Split(splitter);
             HashSet<string> foundForms = new HashSet<string>();
+            string reflexive = "";
+
+            var pronouns = GetPronouns();
+            string word = String.Empty;
             foreach (string w in words)
             {
-                if (w != string.Empty && forms.ContainsKey(w.ToLower()))
+                if (w != string.Empty)
                 {
-                    if (forms.ContainsKey(w.ToLower()))
+                    if (word.Equals(String.Empty))
+                    {
+                        if (pronouns.Contains(w))
+                        {
+                            word = w;
+                            continue;
+                        }
+                    }
+                    else
+                    {
+                        word = $"{word} {w}";
+                    }
+                    if (forms.ContainsKey(word.ToLower()))
+                    {
+                        foundForms.Add(word);
+                    }
+                    else if (forms.ContainsKey(w.ToLower()))
                     {
                         foundForms.Add(w);
                     }
+                    word = String.Empty;
                 }
             }
 
@@ -218,13 +278,14 @@ namespace EjercicioMago
                 string pattern = String.Format(@"\b{0}\b", w);
                 string infinitive = showInfinitive ? $"({forms[w.ToLower()]}) " : "";
 
-                if (infinitive.Contains(":"))
-                {
-                    infinitive = String.Format(@"\b{0}\b0", infinitive);
-                }
+                //if (infinitive.Contains(":"))
+                //{
+                //    infinitive = String.Format(@"\b{0}\b0", infinitive);
+                //}
 
                 string wordReplace = (spaceSize > 0.0) ? new String('_', (int)((double)w.Length * spaceSize)) : w;
                 string replace = $"{infinitive}{wordReplace}";
+                var m = Regex.Matches(text, pattern);
                 text = Regex.Replace(text, pattern, replace);
             }
 

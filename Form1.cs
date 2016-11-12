@@ -17,10 +17,12 @@ namespace EjercicioMago
     {
         string originalText;
         SpanishClozeTestGenerator generator;
+        private bool bIsInitialized;
 
         public Form1()
         {
             InitializeComponent();
+            bIsInitialized = false;
             generator = new SpanishClozeTestGenerator("verbos.sqlite");
             if (!File.Exists("ejemplo_indefinido.txt"))
             {
@@ -39,13 +41,11 @@ namespace EjercicioMago
                     }
                 }
             }
-            
+
             var example = File.Open("ejemplo_indefinido.txt", FileMode.Open, FileAccess.Read);
             tbOrigen.Text = example.Name;
             ReadOriginalFromTextFile(example);
 
-            
- 
             cbMood.DataSource = new BindingSource(generator.MoodStrings.Values, null);
             cbMood.SelectedItem = generator.MoodStrings[SpanishClozeTestGenerator.EMood.Indicativo];
 
@@ -54,12 +54,16 @@ namespace EjercicioMago
 
             UpdateElementEnablesStates();
 
-            CreatePreview();
+            bIsInitialized = true;
 
+            CreatePreview();
         }
 
         private void CreatePreview()
         {
+            if (!bIsInitialized)
+                return;
+
             //string previewText = (originalText.Length > 200) ? $"{originalText.Substring(0, 700)} ..." : originalText;
 
             //string cloze = generator.CreateClozeFromText(originalText, (string)cbMood.SelectedItem, (string)cbTense.SelectedItem, bShowInfinitive.Checked, bHideWord.Checked ? (double)trackBarSpace.Value / 10.0 : -1.0);
