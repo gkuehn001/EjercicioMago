@@ -31,7 +31,6 @@
             this.ChooseSource = new System.Windows.Forms.OpenFileDialog();
             this.tabControlParaCompletar = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.tabPage2 = new System.Windows.Forms.TabPage();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.btnCopyFromClipboard = new System.Windows.Forms.Button();
             this.rbPortapapeles = new System.Windows.Forms.RadioButton();
@@ -52,22 +51,23 @@
             this.btnCrearFichero = new System.Windows.Forms.Button();
             this.rtbPreview = new System.Windows.Forms.RichTextBox();
             this.label5 = new System.Windows.Forms.Label();
-            this.listBoxInfinitives = new System.Windows.Forms.ListBox();
-            this.buttonClearFilterInfinitives = new System.Windows.Forms.Button();
-            this.label1 = new System.Windows.Forms.Label();
-            this.textBoxFilterInfinitives = new System.Windows.Forms.TextBox();
+            this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.rtbConjugated = new System.Windows.Forms.RichTextBox();
             this.cbTenseConj = new System.Windows.Forms.ComboBox();
             this.label4 = new System.Windows.Forms.Label();
             this.cbMoodConj = new System.Windows.Forms.ComboBox();
             this.label6 = new System.Windows.Forms.Label();
-            this.rtbConjugated = new System.Windows.Forms.RichTextBox();
+            this.textBoxFilterInfinitives = new System.Windows.Forms.TextBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.buttonClearFilterInfinitives = new System.Windows.Forms.Button();
+            this.listBoxInfinitives = new System.Windows.Forms.ListBox();
             this.tabControlParaCompletar.SuspendLayout();
             this.tabPage1.SuspendLayout();
-            this.tabPage2.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarSpace)).BeginInit();
             this.groupBox1.SuspendLayout();
+            this.tabPage2.SuspendLayout();
             this.SuspendLayout();
             // 
             // ChooseSource
@@ -105,25 +105,6 @@
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Para Completar";
             // 
-            // tabPage2
-            // 
-            this.tabPage2.BackColor = System.Drawing.SystemColors.Control;
-            this.tabPage2.Controls.Add(this.rtbConjugated);
-            this.tabPage2.Controls.Add(this.cbTenseConj);
-            this.tabPage2.Controls.Add(this.label4);
-            this.tabPage2.Controls.Add(this.cbMoodConj);
-            this.tabPage2.Controls.Add(this.label6);
-            this.tabPage2.Controls.Add(this.textBoxFilterInfinitives);
-            this.tabPage2.Controls.Add(this.label1);
-            this.tabPage2.Controls.Add(this.buttonClearFilterInfinitives);
-            this.tabPage2.Controls.Add(this.listBoxInfinitives);
-            this.tabPage2.Location = new System.Drawing.Point(4, 22);
-            this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(675, 543);
-            this.tabPage2.TabIndex = 1;
-            this.tabPage2.Text = "Conjugador";
-            // 
             // groupBox3
             // 
             this.groupBox3.Controls.Add(this.btnCopyFromClipboard);
@@ -146,6 +127,7 @@
             this.btnCopyFromClipboard.TabIndex = 5;
             this.btnCopyFromClipboard.Text = "Pegar";
             this.btnCopyFromClipboard.UseVisualStyleBackColor = true;
+            this.btnCopyFromClipboard.Click += new System.EventHandler(this.btnCopyFromClipboard_Click);
             // 
             // rbPortapapeles
             // 
@@ -156,6 +138,7 @@
             this.rbPortapapeles.TabIndex = 4;
             this.rbPortapapeles.Text = "Portapapeles";
             this.rbPortapapeles.UseVisualStyleBackColor = true;
+            this.rbPortapapeles.CheckedChanged += new System.EventHandler(this.rbPortapapeles_CheckedChanged);
             // 
             // rbFichero
             // 
@@ -168,6 +151,7 @@
             this.rbFichero.TabStop = true;
             this.rbFichero.Text = "Fichero";
             this.rbFichero.UseVisualStyleBackColor = true;
+            this.rbFichero.CheckedChanged += new System.EventHandler(this.rbFichero_CheckedChanged);
             // 
             // tbOrigen
             // 
@@ -184,6 +168,7 @@
             this.btnChooseOrigin.TabIndex = 2;
             this.btnChooseOrigin.Text = "Elegir";
             this.btnChooseOrigin.UseVisualStyleBackColor = true;
+            this.btnChooseOrigin.Click += new System.EventHandler(this.btnChooseOrigin_Click);
             // 
             // groupBox2
             // 
@@ -231,6 +216,7 @@
             this.bShowInfinitive.TabIndex = 7;
             this.bShowInfinitive.Text = "Mostrar Infinitivo";
             this.bShowInfinitive.UseVisualStyleBackColor = true;
+            this.bShowInfinitive.CheckedChanged += new System.EventHandler(this.bShowInfinitive_CheckedChanged);
             // 
             // trackBarSpace
             // 
@@ -243,6 +229,7 @@
             this.trackBarSpace.SmallChange = 5;
             this.trackBarSpace.TabIndex = 8;
             this.trackBarSpace.Value = 20;
+            this.trackBarSpace.ValueChanged += new System.EventHandler(this.trackBarSpace_ValueChanged);
             // 
             // groupBox1
             // 
@@ -264,6 +251,7 @@
             this.cbTense.Name = "cbTense";
             this.cbTense.Size = new System.Drawing.Size(121, 21);
             this.cbTense.TabIndex = 6;
+            this.cbTense.SelectedIndexChanged += new System.EventHandler(this.cbTense_SelectedIndexChanged);
             // 
             // label3
             // 
@@ -281,6 +269,7 @@
             this.cbMood.Name = "cbMood";
             this.cbMood.Size = new System.Drawing.Size(121, 21);
             this.cbMood.TabIndex = 4;
+            this.cbMood.SelectedIndexChanged += new System.EventHandler(this.cbMood_SelectedIndexChanged);
             // 
             // label2
             // 
@@ -301,6 +290,7 @@
             this.button1.TabIndex = 23;
             this.button1.Text = "Copiar al Portapapeles";
             this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // btnCrearFichero
             // 
@@ -312,6 +302,7 @@
             this.btnCrearFichero.TabIndex = 22;
             this.btnCrearFichero.Text = "Crear Fichero";
             this.btnCrearFichero.UseVisualStyleBackColor = true;
+            this.btnCrearFichero.Click += new System.EventHandler(this.btnCrearFichero_Click);
             // 
             // rtbPreview
             // 
@@ -334,43 +325,36 @@
             this.label5.TabIndex = 20;
             this.label5.Text = "Preestreno:";
             // 
-            // listBoxInfinitives
+            // tabPage2
             // 
-            this.listBoxInfinitives.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left)));
-            this.listBoxInfinitives.FormattingEnabled = true;
-            this.listBoxInfinitives.Location = new System.Drawing.Point(21, 62);
-            this.listBoxInfinitives.Name = "listBoxInfinitives";
-            this.listBoxInfinitives.Size = new System.Drawing.Size(191, 459);
-            this.listBoxInfinitives.TabIndex = 0;
-            this.listBoxInfinitives.SelectedValueChanged += new System.EventHandler(this.listBoxInfinitives_SelectedValueChanged);
+            this.tabPage2.BackColor = System.Drawing.SystemColors.Control;
+            this.tabPage2.Controls.Add(this.rtbConjugated);
+            this.tabPage2.Controls.Add(this.cbTenseConj);
+            this.tabPage2.Controls.Add(this.label4);
+            this.tabPage2.Controls.Add(this.cbMoodConj);
+            this.tabPage2.Controls.Add(this.label6);
+            this.tabPage2.Controls.Add(this.textBoxFilterInfinitives);
+            this.tabPage2.Controls.Add(this.label1);
+            this.tabPage2.Controls.Add(this.buttonClearFilterInfinitives);
+            this.tabPage2.Controls.Add(this.listBoxInfinitives);
+            this.tabPage2.Location = new System.Drawing.Point(4, 22);
+            this.tabPage2.Name = "tabPage2";
+            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage2.Size = new System.Drawing.Size(675, 543);
+            this.tabPage2.TabIndex = 1;
+            this.tabPage2.Text = "Conjugador";
             // 
-            // buttonClearFilterInfinitives
+            // rtbConjugated
             // 
-            this.buttonClearFilterInfinitives.Location = new System.Drawing.Point(187, 34);
-            this.buttonClearFilterInfinitives.Name = "buttonClearFilterInfinitives";
-            this.buttonClearFilterInfinitives.Size = new System.Drawing.Size(25, 23);
-            this.buttonClearFilterInfinitives.TabIndex = 2;
-            this.buttonClearFilterInfinitives.Text = "X";
-            this.buttonClearFilterInfinitives.UseVisualStyleBackColor = true;
-            this.buttonClearFilterInfinitives.Click += new System.EventHandler(this.buttonClearFilterInfinitives_Click);
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(18, 20);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(32, 13);
-            this.label1.TabIndex = 3;
-            this.label1.Text = "Filtro:";
-            // 
-            // textBoxFilterInfinitives
-            // 
-            this.textBoxFilterInfinitives.Location = new System.Drawing.Point(21, 36);
-            this.textBoxFilterInfinitives.Name = "textBoxFilterInfinitives";
-            this.textBoxFilterInfinitives.Size = new System.Drawing.Size(160, 20);
-            this.textBoxFilterInfinitives.TabIndex = 4;
-            this.textBoxFilterInfinitives.TextChanged += new System.EventHandler(this.textBoxFilterInfinitives_TextChanged);
+            this.rtbConjugated.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.rtbConjugated.Location = new System.Drawing.Point(238, 109);
+            this.rtbConjugated.Name = "rtbConjugated";
+            this.rtbConjugated.ReadOnly = true;
+            this.rtbConjugated.Size = new System.Drawing.Size(416, 411);
+            this.rtbConjugated.TabIndex = 11;
+            this.rtbConjugated.Text = "";
             // 
             // cbTenseConj
             // 
@@ -408,17 +392,43 @@
             this.label6.TabIndex = 7;
             this.label6.Text = "Modo:";
             // 
-            // rtbConjugated
+            // textBoxFilterInfinitives
             // 
-            this.rtbConjugated.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.rtbConjugated.Location = new System.Drawing.Point(238, 109);
-            this.rtbConjugated.Name = "rtbConjugated";
-            this.rtbConjugated.ReadOnly = true;
-            this.rtbConjugated.Size = new System.Drawing.Size(416, 411);
-            this.rtbConjugated.TabIndex = 11;
-            this.rtbConjugated.Text = "";
+            this.textBoxFilterInfinitives.Location = new System.Drawing.Point(21, 36);
+            this.textBoxFilterInfinitives.Name = "textBoxFilterInfinitives";
+            this.textBoxFilterInfinitives.Size = new System.Drawing.Size(160, 20);
+            this.textBoxFilterInfinitives.TabIndex = 4;
+            this.textBoxFilterInfinitives.TextChanged += new System.EventHandler(this.textBoxFilterInfinitives_TextChanged);
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(18, 20);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(32, 13);
+            this.label1.TabIndex = 3;
+            this.label1.Text = "Filtro:";
+            // 
+            // buttonClearFilterInfinitives
+            // 
+            this.buttonClearFilterInfinitives.Location = new System.Drawing.Point(187, 34);
+            this.buttonClearFilterInfinitives.Name = "buttonClearFilterInfinitives";
+            this.buttonClearFilterInfinitives.Size = new System.Drawing.Size(25, 23);
+            this.buttonClearFilterInfinitives.TabIndex = 2;
+            this.buttonClearFilterInfinitives.Text = "X";
+            this.buttonClearFilterInfinitives.UseVisualStyleBackColor = true;
+            this.buttonClearFilterInfinitives.Click += new System.EventHandler(this.buttonClearFilterInfinitives_Click);
+            // 
+            // listBoxInfinitives
+            // 
+            this.listBoxInfinitives.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
+            this.listBoxInfinitives.FormattingEnabled = true;
+            this.listBoxInfinitives.Location = new System.Drawing.Point(21, 62);
+            this.listBoxInfinitives.Name = "listBoxInfinitives";
+            this.listBoxInfinitives.Size = new System.Drawing.Size(191, 459);
+            this.listBoxInfinitives.TabIndex = 0;
+            this.listBoxInfinitives.SelectedValueChanged += new System.EventHandler(this.listBoxInfinitives_SelectedValueChanged);
             // 
             // Form1
             // 
@@ -432,8 +442,6 @@
             this.tabControlParaCompletar.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             this.tabPage1.PerformLayout();
-            this.tabPage2.ResumeLayout(false);
-            this.tabPage2.PerformLayout();
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
             this.groupBox2.ResumeLayout(false);
@@ -441,6 +449,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.trackBarSpace)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
+            this.tabPage2.ResumeLayout(false);
+            this.tabPage2.PerformLayout();
             this.ResumeLayout(false);
 
         }
