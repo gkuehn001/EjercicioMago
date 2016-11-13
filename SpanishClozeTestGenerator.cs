@@ -198,10 +198,9 @@ namespace EjercicioMago
                     word = String.Empty;
                 }
             }
-            //Console.WriteLine($"{{{w.ToLower()}}}");
+
             foreach (var w in foundForms)
             {
-                //string input = "test, and test but not testing.  But yes to test";
                 string pattern = String.Format(@"\b{0}\b", w);
                 string infinitive = showInfinitive ? $"({forms[w.ToLower()]})" : "";
                 string wordReplace = (spaceSize > 0.0) ? new String('_', (int)((double)w.Length * spaceSize)) : w;
@@ -241,7 +240,6 @@ namespace EjercicioMago
 
             string[] words = text.Split(splitter);
             HashSet<string> foundForms = new HashSet<string>();
-            string reflexive = "";
 
             var pronouns = GetPronouns();
             string word = String.Empty;

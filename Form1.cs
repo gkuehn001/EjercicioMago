@@ -91,7 +91,6 @@ namespace EjercicioMago
 
         private void btnChooseOrigin_Click(object sender, EventArgs e)
         {
-            Stream myStream = null;
             OpenFileDialog openFileDialog1 = new OpenFileDialog();
 
             //openFileDialog1.InitialDirectory = "c:\\";
