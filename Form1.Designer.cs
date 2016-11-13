@@ -46,9 +46,9 @@
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.rbFichero = new System.Windows.Forms.RadioButton();
-            this.rbPortapapeles = new System.Windows.Forms.RadioButton();
             this.btnCopyFromClipboard = new System.Windows.Forms.Button();
+            this.rbPortapapeles = new System.Windows.Forms.RadioButton();
+            this.rbFichero = new System.Windows.Forms.RadioButton();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarSpace)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -245,18 +245,15 @@
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Origen";
             // 
-            // rbFichero
+            // btnCopyFromClipboard
             // 
-            this.rbFichero.AutoSize = true;
-            this.rbFichero.Checked = true;
-            this.rbFichero.Location = new System.Drawing.Point(19, 18);
-            this.rbFichero.Name = "rbFichero";
-            this.rbFichero.Size = new System.Drawing.Size(60, 17);
-            this.rbFichero.TabIndex = 3;
-            this.rbFichero.TabStop = true;
-            this.rbFichero.Text = "Fichero";
-            this.rbFichero.UseVisualStyleBackColor = true;
-            this.rbFichero.CheckedChanged += new System.EventHandler(this.rbFichero_CheckedChanged);
+            this.btnCopyFromClipboard.Location = new System.Drawing.Point(110, 39);
+            this.btnCopyFromClipboard.Name = "btnCopyFromClipboard";
+            this.btnCopyFromClipboard.Size = new System.Drawing.Size(99, 23);
+            this.btnCopyFromClipboard.TabIndex = 5;
+            this.btnCopyFromClipboard.Text = "Pegar";
+            this.btnCopyFromClipboard.UseVisualStyleBackColor = true;
+            this.btnCopyFromClipboard.Click += new System.EventHandler(this.btnCopyFromClipboard_Click);
             // 
             // rbPortapapeles
             // 
@@ -269,15 +266,18 @@
             this.rbPortapapeles.UseVisualStyleBackColor = true;
             this.rbPortapapeles.CheckedChanged += new System.EventHandler(this.rbPortapapeles_CheckedChanged);
             // 
-            // btnCopyFromClipboard
+            // rbFichero
             // 
-            this.btnCopyFromClipboard.Location = new System.Drawing.Point(110, 39);
-            this.btnCopyFromClipboard.Name = "btnCopyFromClipboard";
-            this.btnCopyFromClipboard.Size = new System.Drawing.Size(99, 23);
-            this.btnCopyFromClipboard.TabIndex = 5;
-            this.btnCopyFromClipboard.Text = "Pegar";
-            this.btnCopyFromClipboard.UseVisualStyleBackColor = true;
-            this.btnCopyFromClipboard.Click += new System.EventHandler(this.btnCopyFromClipboard_Click);
+            this.rbFichero.AutoSize = true;
+            this.rbFichero.Checked = true;
+            this.rbFichero.Location = new System.Drawing.Point(19, 18);
+            this.rbFichero.Name = "rbFichero";
+            this.rbFichero.Size = new System.Drawing.Size(60, 17);
+            this.rbFichero.TabIndex = 3;
+            this.rbFichero.TabStop = true;
+            this.rbFichero.Text = "Fichero";
+            this.rbFichero.UseVisualStyleBackColor = true;
+            this.rbFichero.CheckedChanged += new System.EventHandler(this.rbFichero_CheckedChanged);
             // 
             // Form1
             // 
