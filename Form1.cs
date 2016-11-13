@@ -17,13 +17,14 @@ namespace EjercicioMago
     {
         string originalText;
         SpanishClozeTestGenerator generator;
-        private bool bIsInitialized;
+        Conjugador conjugador = null;
+        private bool bIsInitialized = false;
+        string databaseFile = "verbos.sqlite";
 
         public Form1()
         {
             InitializeComponent();
-            bIsInitialized = false;
-            generator = new SpanishClozeTestGenerator("verbos.sqlite");
+            generator = new SpanishClozeTestGenerator(databaseFile);
             if (!File.Exists("ejemplo_indefinido.txt"))
             {
                 var assembly = Assembly.GetExecutingAssembly();
@@ -47,7 +48,7 @@ namespace EjercicioMago
             ReadOriginalFromTextFile(example);
 
             cbMood.DataSource = new BindingSource(generator.MoodStrings.Values, null);
-            cbMood.SelectedItem = generator.MoodStrings[SpanishClozeTestGenerator.EMood.Indicativo];
+            cbMood.SelectedItem = generator.MoodStrings[VerbUser.EMood.Indicativo];
 
             cbTense.DataSource = new BindingSource(generator.TenseStrings.Values, null);
             cbTense.SelectedItem = generator.TenseStrings[SpanishClozeTestGenerator.ETense.Preterito];
@@ -157,7 +158,7 @@ namespace EjercicioMago
 
             if (fileDialog.ShowDialog() == DialogResult.OK)
             {
-                
+
                 try
                 {
                     using (StreamWriter writer = new StreamWriter(fileDialog.OpenFile(), Encoding.Default))
@@ -221,6 +222,72 @@ namespace EjercicioMago
                     ReadOriginalFromTextFile(System.IO.File.Open(tbOrigen.Text, FileMode.Open, FileAccess.Read));
                 }
             }
+        }
+
+        private void tabControlParaCompletar_Selected(object sender, TabControlEventArgs e)
+        {
+            if (tabControlParaCompletar.SelectedTab.Name.Equals("tabPage2"))
+            {
+                if (conjugador == null)
+                {
+                    conjugador = new Conjugador(databaseFile);
+                    listBoxInfinitives.Items.Clear();
+                    listBoxInfinitives.Items.AddRange(conjugador.GetVerbList(textBoxFilterInfinitives.Text).ToArray());
+
+                    cbMoodConj.DataSource = new BindingSource(conjugador.MoodStrings.Values, null);
+                    cbMoodConj.SelectedItem = conjugador.MoodStrings[VerbUser.EMood.Todo];
+
+                    cbTenseConj.DataSource = new BindingSource(conjugador.TenseStrings.Values, null);
+                    cbTenseConj.SelectedItem = conjugador.TenseStrings[VerbUser.ETense.Todo];
+
+                    rtbConjugated.BackColor = Color.White;
+
+                }
+            }
+        }
+
+        private void textBoxFilterInfinitives_TextChanged(object sender, EventArgs e)
+        {
+            listBoxInfinitives.Items.Clear();
+            listBoxInfinitives.Items.AddRange(conjugador.GetVerbList(textBoxFilterInfinitives.Text).ToArray());
+            if (listBoxInfinitives.Items.Count == 1)
+            {
+                listBoxInfinitives.SelectedIndex = 0;
+            }
+        }
+
+        private void buttonClearFilterInfinitives_Click(object sender, EventArgs e)
+        {
+            textBoxFilterInfinitives.Text = String.Empty;
+        }
+
+        private void listBoxInfinitives_SelectedValueChanged(object sender, EventArgs e)
+        {
+            UpdateConjugatedText();     
+        }
+
+        private void cbMoodConj_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            UpdateConjugatedText();
+        }
+
+        private void UpdateConjugatedText()
+        {
+            if (bIsInitialized && cbMoodConj.SelectedItem != null && cbTenseConj.SelectedItem != null && listBoxInfinitives.SelectedItem != null)
+            {
+                rtbConjugated.Text = "";
+                conjugador.GetConjugatedRTF(rtbConjugated, listBoxInfinitives.SelectedItem.ToString(), (string)cbMoodConj.SelectedItem, (string)cbTenseConj.SelectedItem);
+            }
+        }
+
+        private void cbTenseConj_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            UpdateConjugatedText();
+        }
+
+        private void bHideWord_CheckedChanged(object sender, EventArgs e)
+        {
+            CreatePreview();
         }
     }
 }

@@ -8,77 +8,12 @@ using System.Threading.Tasks;
 
 namespace EjercicioMago
 {
-    public class SpanishClozeTestGenerator
+    public class SpanishClozeTestGenerator : VerbUser
     {
-        public enum EMood
+        public SpanishClozeTestGenerator(string dbFile) : base(dbFile)
         {
-            Indicativo,
-            Subjuntivo,
-            Imperativo
-        }
-
-        public enum ETense
-        {
-            Presente,
-            Futuro,
-            Imperfecto,
-            Preterito,
-            Condicional,
-            PresentePerfecto,
-            FuturoPerfecto,
-            Pluscuamperfecto,
-            PreteritoAnterior
-        }
-
-        public enum EVerbField
-        {
-            infinitive,
-            mood,
-            tense,
-            verb_english,
-            form_1s,
-            form_2s,
-            form_3s,
-            form_1p,
-            form_2p,
-            form_3p
-        }
-
-        public Dictionary<EMood, string> MoodStrings { get; private set; }
-        public Dictionary<ETense, string> TenseStrings { get; private set; }
-
-        private string DBFile { get; set; }
-
-        public SpanishClozeTestGenerator(string dbFile)
-        {
-            DBFile = dbFile;
-
-            MoodStrings = new Dictionary<EMood, string>();
-            MoodStrings.Add(EMood.Indicativo, "Indicativo");
-            MoodStrings.Add(EMood.Subjuntivo, "Subjuntivo");
-            MoodStrings.Add(EMood.Imperativo, "Imperativo");
-
-            TenseStrings = new Dictionary<ETense, string>();
-            TenseStrings.Add(ETense.Presente, "Presente");
-            TenseStrings.Add(ETense.Futuro, "Futuro");
-            TenseStrings.Add(ETense.Imperfecto, "Imperfecto");
-            TenseStrings.Add(ETense.Preterito, "Pretérito");
-            TenseStrings.Add(ETense.Condicional, "Condicional");
-            TenseStrings.Add(ETense.PresentePerfecto, "Presente perfecto");
-            TenseStrings.Add(ETense.FuturoPerfecto, "Futuro perfecto");
-            TenseStrings.Add(ETense.Pluscuamperfecto, "Pluscuamperfecto");
-            TenseStrings.Add(ETense.PreteritoAnterior, "Pretérito anterior");
-        }
-
-        public static void CreateDBFromSQL(string sqlFile, string targetDBFile)
-        {       
-            SQLiteConnection dbConnection = new SQLiteConnection($"Data Source={targetDBFile};Version=3;");
-            dbConnection.Open();
-            SQLiteCommand cmd = dbConnection.CreateCommand();
-            cmd.CommandText = System.IO.File.ReadAllText(sqlFile);
-            Console.WriteLine("Filling DB ...");
-            cmd.ExecuteNonQuery();
-            Console.WriteLine("DB created.");
+            MoodStrings.Remove(EMood.Todo);
+            TenseStrings.Remove(ETense.Todo);
         }
 
         public Dictionary<string, string> GetConjugatedToInfinitive(string mood, string tense, ref string report)
@@ -169,7 +104,6 @@ namespace EjercicioMago
             char[] splitter = GetSplitter();
             string[] words = text.Split(splitter);
             HashSet<string> foundForms = new HashSet<string>();
-            var pronouns = GetPronouns();
             string word = String.Empty;
             foreach (string w in words)
             {
@@ -177,7 +111,7 @@ namespace EjercicioMago
                 {
                     if (word.Equals(String.Empty))
                     {
-                        if (pronouns.Contains(w))
+                        if (ReflexivePronouns.Contains(w))
                         {
                             word = w;
                             continue;
@@ -211,17 +145,6 @@ namespace EjercicioMago
             return text;
         }
 
-        private List<string> GetPronouns()
-        {
-            var pronouns = new List<string>();
-            pronouns.Add("me");
-            pronouns.Add("te");
-            pronouns.Add("se");
-            pronouns.Add("nos");
-            pronouns.Add("os");
-            return pronouns;
-        }
-
         private char[] GetSplitter()
         {
             return new Char[] { ' ', ',', '.', '!', '¡', '?', '¿', '\'', '(', ')', '[', ']' };
@@ -241,7 +164,6 @@ namespace EjercicioMago
             string[] words = text.Split(splitter);
             HashSet<string> foundForms = new HashSet<string>();
 
-            var pronouns = GetPronouns();
             string word = String.Empty;
             foreach (string w in words)
             {
@@ -249,7 +171,7 @@ namespace EjercicioMago
                 {
                     if (word.Equals(String.Empty))
                     {
-                        if (pronouns.Contains(w))
+                        if (ReflexivePronouns.Contains(w))
                         {
                             word = w;
                             continue;
